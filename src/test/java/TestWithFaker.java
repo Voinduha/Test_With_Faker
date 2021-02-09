@@ -1,3 +1,4 @@
+import com.codeborne.selenide.Selenide;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 
@@ -26,7 +27,7 @@ public class TestWithFaker {
                     hobby2 = "Reading",
                     hobby3 = "Sports",
                     picture = "ejik.jpg",
-                    currentAddress = "Goa India",
+                    currentAddress = faker.address().fullAddress(),
                     state = "Uttar Pradesh",
                     city = "Merrut";
 
@@ -70,5 +71,6 @@ public class TestWithFaker {
         $x("//td[text()='Picture']").parent().shouldHave(text(picture));
         $x("//td[text()='Address']").parent().shouldHave(text(currentAddress));
         $x("//td[text()='State and City']").parent().shouldHave(text(state + " " + city));
+        Selenide.sleep(5000);
     }
 }
