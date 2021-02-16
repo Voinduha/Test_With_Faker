@@ -1,5 +1,5 @@
+package tests;
 
-import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -8,58 +8,61 @@ import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.*;
 
-public class TestWithFaker {
-    Faker faker = new Faker();
-
+public class RegistrationForm {
     @Test
     void successfulFillFormTest() {
-        String firstName = faker.name().firstName(),
-                lastName = faker.name().lastName(),
-                email = faker.internet().emailAddress(),
+        String firstName = "Alex",
+                lastName = "Alexov",
+                email = "aa@aa.com",
                 gender = "Other",
-                mobile = faker.number().digits(10),
-                dayOfBirth = "14",
-                monthOfBirth = "April",
-                yearOfBirth = "1975",
+                mobile = "1234567890",
+                dayOfBirth = "10",
+                monthOfBirth = "May",
+                yearOfBirth = "1988",
                 subject1 = "Chemistry",
                 subject2 = "Commerce",
-                hobby1 = "Music",
+                hobby1 = "Sports",
                 hobby2 = "Reading",
-                hobby3 = "Sports",
+                hobby3 = "Music",
                 picture = "ejik.jpg",
-                currentAddress = faker.address().fullAddress(),
+                currentAddress = "Montenegro 123",
                 state = "Uttar Pradesh",
                 city = "Merrut";
-
         open("https://demoqa.com/automation-practice-form");
-        $(".main-header").shouldHave(text("Practice Form"));
+        $(".practice-form-wrapper").shouldHave(text("Student Registration Form"));
         $("#firstName").val(firstName);
         $("#lastName").val(lastName);
         $("#userEmail").val(email);
-        $("#genterWrapper").$(byText(gender)).click();
+        $(byText("Other")).click();
         $("#userNumber").val(mobile);
+        //set date
+
         $("#dateOfBirthInput").clear();
         $(".react-datepicker__month-select").selectOption(monthOfBirth);
         $(".react-datepicker__year-select").selectOption(yearOfBirth);
         $(".react-datepicker__day--0" + dayOfBirth).click();
-        $("#subjectsInput").val(subject1);
-        $(".subjects-auto-complete__menu-list").$(byText(subject1)).click();
+        // set subject
+        $("#subjectsInput").setValue(subject1).pressEnter();
+
         $("#subjectsInput").val(subject2);
         $(".subjects-auto-complete__menu-list").$(byText(subject2)).click();
+        // set hobbies
         $("#hobbiesWrapper").$(byText(hobby1)).click();
         $("#hobbiesWrapper").$(byText(hobby2)).click();
         $("#hobbiesWrapper").$(byText(hobby3)).click();
+        // upload image
         File file = new File("src/test/resources/ejik.jpg");
         $("#uploadPicture").uploadFile(file);
-
+        // set current address
         $("#currentAddress").val(currentAddress);
+        // set state and city
         $("#state").click();
         $("#stateCity-wrapper").$(byText(state)).click();
         $("#city").click();
         $("#stateCity-wrapper").$(byText(city)).click();
 
         $("#submit").click();
-        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
+        $(".modal-title").shouldHave(text("Thanks for submitting the form"));
 
         $x("//td[text()='Student Name']").parent().shouldHave(text(firstName + " " + lastName));
         $x("//td[text()='Student Email']").parent().shouldHave(text(email));
