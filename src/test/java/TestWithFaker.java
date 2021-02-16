@@ -1,4 +1,4 @@
-
+import com.codeborne.selenide.Selenide;
 import com.github.javafaker.Faker;
 import org.junit.jupiter.api.Test;
 
@@ -12,24 +12,24 @@ public class TestWithFaker {
     Faker faker = new Faker();
 
     @Test
-    void successfulFillFormTest() {
-        String firstName = faker.name().firstName(),
-                lastName = faker.name().lastName(),
-                email = faker.internet().emailAddress(),
-                gender = "Other",
-                mobile = faker.number().digits(10),
-                dayOfBirth = "14",
-                monthOfBirth = "April",
-                yearOfBirth = "1975",
-                subject1 = "Chemistry",
-                subject2 = "Commerce",
-                hobby1 = "Music",
-                hobby2 = "Reading",
-                hobby3 = "Sports",
-                picture = "ejik.jpg",
-                currentAddress = faker.address().fullAddress(),
-                state = "Uttar Pradesh",
-                city = "Merrut";
+        void successfulFillFormTest() {
+            String firstName = faker.name().firstName(),
+                    lastName = faker.name().lastName(),
+                    email = faker.internet().emailAddress(),
+                    gender = "Other",
+                    mobile = faker.number().digits(10),
+                    dayOfBirth = "14",
+                    monthOfBirth = "April",
+                    yearOfBirth = "1975",
+                    subject1 = "Chemistry",
+                    subject2 = "Commerce",
+                    hobby1 = "Music",
+                    hobby2 = "Reading",
+                    hobby3 = "Sports",
+                    picture = "ejik.jpg",
+                    currentAddress = faker.address().fullAddress(),
+                    state = "Uttar Pradesh",
+                    city = "Merrut";
 
         open("https://demoqa.com/automation-practice-form");
         $(".main-header").shouldHave(text("Practice Form"));
